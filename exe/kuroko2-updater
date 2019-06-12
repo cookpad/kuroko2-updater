@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require "kuroko2/updater"
+
+schedule_config = ARGV[0] || "config/schedule.rb"
+
+Kuroko2::Updater.new(
+  job_list: Whenever::JobList.new(file: schedule_config)
+).run
