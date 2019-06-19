@@ -74,7 +74,9 @@ module Kuroko2
               cron: cron(time, job),
               slack_channel: slack_channel,
               user_id: users,
-              tags: tags
+              tags: tags,
+              hipchat_notify_finished: notify_finished,
+              notify_cancellation: notify_cancellation
             }
           end
         end
@@ -96,6 +98,18 @@ module Kuroko2
 
           Please do not edit this job definition directly.
         DESC
+      end
+
+      def notify_finished
+        job_list.kuroko2_notify_finished
+      rescue NoMethodError
+        false
+      end
+
+      def notify_cancellation
+        job_list.kuroko2_notify_cancellation
+      rescue NoMethodError
+        true
       end
 
       def tags

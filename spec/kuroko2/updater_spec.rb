@@ -3,6 +3,7 @@ RSpec.describe Kuroko2::Updater do
     expect(Kuroko2::Updater::VERSION).not_to be nil
   end
 
+  let(:time_and_jobs) {}
   let(:whenever_job_list) do
     double(
       :job_list,
@@ -13,6 +14,12 @@ RSpec.describe Kuroko2::Updater do
       kuroko2_job_description: "This job was created by a robot army, don't edit it or you may anger them"
     )
   end
+
+  before do
+    allow(whenever_job_list).to receive(:kuroko2_notify_cancellation).and_raise NoMethodError
+    allow(whenever_job_list).to receive(:kuroko2_notify_finished).and_raise NoMethodError
+  end
+
 
   let(:kuroko2_jobs) { [] }
 
@@ -44,7 +51,9 @@ RSpec.describe Kuroko2::Updater do
         user_id: [17, 22],
         description: whenever_job_list.kuroko2_job_description,
         tags: %w(foo bar baz),
-        slack_channel: "#random"
+        slack_channel: "#random",
+        notify_cancellation: true,
+        hipchat_notify_finished: false
       )
 
       expect(client).to receive(:create).with(
@@ -54,7 +63,9 @@ RSpec.describe Kuroko2::Updater do
         user_id: [17, 22],
         description: whenever_job_list.kuroko2_job_description,
         tags: %w(foo bar baz),
-        slack_channel: "#random"
+        slack_channel: "#random",
+        notify_cancellation: true,
+        hipchat_notify_finished: false
       )
       subject.run
     end
@@ -286,9 +297,46 @@ RSpec.describe Kuroko2::Updater do
         description: whenever_job_list.kuroko2_job_description,
         slack_channel: "#random",
         user_id: [17, 22],
-        tags: %w(foo bar baz)
+        tags: %w(foo bar baz),
+        notify_cancellation: true,
+        hipchat_notify_finished: false
       )
       subject.run
+    end
+  end
+
+  context "notification settings" do
+    let(:time_and_jobs) do
+      {
+        day: [
+          double(:job, task: "cheese:update", at: "17:30", output: "script output")
+        ]
+      }
+    end
+
+    context "defaults" do
+      it "sets notify_cancellation but not hipchat_notify_finished" do
+        expect(client).to receive(:create).with(hash_including(
+                                                  notify_cancellation: true,
+                                                  hipchat_notify_finished: false
+                                                ))
+        subject.run
+      end
+    end
+
+    context "overide settings" do
+      before do
+        allow(whenever_job_list).to receive(:kuroko2_notify_finished).and_return(true)
+        allow(whenever_job_list).to receive(:kuroko2_notify_cancellation).and_return(false)
+      end
+
+      it "sets the expected params" do
+        expect(client).to receive(:create).with(hash_including(
+                                                  notify_cancellation: false,
+                                                  hipchat_notify_finished: true
+                                                ))
+        subject.run
+      end
     end
   end
 end

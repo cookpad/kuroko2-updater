@@ -31,6 +31,8 @@ RSpec.describe Kuroko2::Updater do
         slack_channel: "#kuroko2-notifications",
         tags: ["spam", "ham", "eggs"],
         user_id: [1, 18, 44],
+        hipchat_notify_finished: false,
+        notify_cancellation: true,
         script: <<~SCRIPT.chomp
           queue: test-executor
           docker_application: test-app-batch
@@ -46,6 +48,8 @@ RSpec.describe Kuroko2::Updater do
         slack_channel: "#kuroko2-notifications",
         tags: ["spam", "ham", "eggs"],
         user_id: [1, 18, 44],
+        hipchat_notify_finished: false,
+        notify_cancellation: true,
         script: <<~SCRIPT.chomp
           queue: test-executor
           docker_application: test-app-batch
@@ -61,6 +65,8 @@ RSpec.describe Kuroko2::Updater do
         slack_channel: "#kuroko2-notifications",
         tags: ["spam", "ham", "eggs"],
         user_id: [1, 18, 44],
+        hipchat_notify_finished: false,
+        notify_cancellation: true,
         script: <<~SCRIPT.chomp
           queue: test-executor
           docker_application: test-app-batch
@@ -99,6 +105,8 @@ RSpec.describe Kuroko2::Updater do
         slack_channel: "#kuroko2-notifications",
         tags: ["spam", "ham", "eggs"],
         user_id: [1, 18, 44],
+        hipchat_notify_finished: false,
+        notify_cancellation: true,
         script: <<~SCRIPT.chomp
           queue: test-executor
           docker_application: test-app-batch
@@ -115,6 +123,8 @@ RSpec.describe Kuroko2::Updater do
         slack_channel: "#kuroko2-notifications",
         tags: ["spam", "ham", "eggs"],
         user_id: [1, 18, 44],
+        hipchat_notify_finished: false,
+        notify_cancellation: true,
         script: <<~SCRIPT.chomp
           queue: test-executor
           docker_application: test-app-batch
@@ -131,6 +141,8 @@ RSpec.describe Kuroko2::Updater do
         slack_channel: "#kuroko2-notifications",
         tags: ["spam", "ham", "eggs"],
         user_id: [1, 18, 44],
+        hipchat_notify_finished: false,
+        notify_cancellation: true,
         script: <<~SCRIPT.chomp
           queue: test-executor
           docker_application: test-app-batch
