@@ -61,7 +61,7 @@ module Kuroko2
               config.basic_auth(ENV.fetch("KUROKO2_API_USER"), ENV.fetch("KUROKO2_API_KEY"))
               config.use FaradayMiddleware::EncodeJson
               config.use FaradayMiddleware::ParseJson
-              config.adapter Faraday::Adapter::NetHttp
+              config.adapter Faraday.default_adapter
             end
           end
       end
