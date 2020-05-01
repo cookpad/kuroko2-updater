@@ -124,17 +124,11 @@ module Kuroko2
         []
       end
 
-      def cron(time, job)
-        if job.at
-          if job.at.respond_to?(:map)
-            job.at.map do |at|
-              ::Whenever::Output::Cron.new(time, nil, at).time_in_cron_syntax
-            end
-          else
-            [::Whenever::Output::Cron.new(time, nil, job.at).time_in_cron_syntax]
+      def cron(times, job)
+        ::Whenever::Output::Cron.enumerate(times).flat_map do |time|
+          ::Whenever::Output::Cron.enumerate(job.at).map do |at|
+            ::Whenever::Output::Cron.new(time, nil, at).time_in_cron_syntax
           end
-        else
-          [::Whenever::Output::Cron.new(time).time_in_cron_syntax]
         end
       end
 
