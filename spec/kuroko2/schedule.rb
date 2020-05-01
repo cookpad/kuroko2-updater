@@ -21,11 +21,15 @@ DESC
 
 set :kuroko2_slack_channel, "#kuroko2-notifications"
 
-every 1.day do
+every :day, at: "07:00,15:00,23:00" do
   rake "milk::bottle"
   runner "CheeseService.melt"
 end
 
-every 3.hours do
+every 3.hours, at: ["00:01"] do
   rake "milk::pour"
+end
+
+every "monday,wednesday,friday", at: "9:00 am" do
+  rake "yogurt::open"
 end
