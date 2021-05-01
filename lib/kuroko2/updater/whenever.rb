@@ -13,7 +13,7 @@ module Kuroko2
           # patch whenever not to chomp newlines, as kuroko2 scripts need them
           def process_template(template, options)
             template.gsub(/:\w+/) do |key|
-              before_and_after = [$`[-1..-1], $'[0..0]]
+              before_and_after = [$`[-1..], $'[0..0]]
               option = options[key.sub(":", "").to_sym] || key
 
               if before_and_after.all? { |c| c == "'" }

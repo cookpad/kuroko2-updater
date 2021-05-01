@@ -9,9 +9,11 @@ Gem::Specification.new do |spec|
   spec.email         = ["edward-robinson@cookpad.com"]
   spec.summary       = "A tool to manage kuroko2 job-definitions based on a schedule.rb file"
 
+  spec.required_ruby_version = ">= 2.7"
+
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  spec.files         = Dir.chdir(File.expand_path(__dir__)) do
+  spec.files = Dir.chdir(File.expand_path(__dir__)) do
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   end
   spec.bindir        = "exe"

@@ -53,7 +53,7 @@ module Kuroko2
           end
 
           def log
-            Logger.new(STDERR)
+            Logger.new($stderr)
           end
 
           def client
